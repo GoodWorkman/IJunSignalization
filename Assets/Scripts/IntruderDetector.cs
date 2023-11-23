@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlarmSystem : MonoBehaviour
+public class IntruderDetector : MonoBehaviour
 {
     public event Action OnIntruderDetected;
     public event Action OnIntruderLeft;

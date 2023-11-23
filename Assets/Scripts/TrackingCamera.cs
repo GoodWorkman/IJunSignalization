@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class TrackingCamera : MonoBehaviour
 {
     [Header("Target Transform")]
     [SerializeField] private GameObject _target;

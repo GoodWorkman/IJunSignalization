@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(InputController))]
-public class MovementController : MonoBehaviour, IPlayer
+[RequireComponent(typeof(UserInputReader))]
+public class CharacterMovement : MonoBehaviour, IPlayer
 {
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 3f;
@@ -11,7 +11,7 @@ public class MovementController : MonoBehaviour, IPlayer
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Transform _groundPoint;
 
-    private InputController _controller;
+    private UserInputReader _inputReader;
     private Rigidbody _rigidbody;
     private float _groundCheckRadius = 0.5f;
     private float _minMagnitude = 0.01f;
@@ -21,7 +21,7 @@ public class MovementController : MonoBehaviour, IPlayer
 
     private void OnValidate()
     {
-        _controller ??= GetComponent<InputController>();
+        _inputReader ??= GetComponent<UserInputReader>();
         _rigidbody ??= GetComponent<Rigidbody>();
     }
 
@@ -45,7 +45,7 @@ public class MovementController : MonoBehaviour, IPlayer
     {
         _isGrounded = Physics.CheckSphere(_groundPoint.position, _groundCheckRadius, _groundLayer);
 
-        if (_isGrounded && _controller.IsJump)
+        if (_isGrounded && _inputReader.IsJump)
         {
             _canJump = true;
         }
@@ -63,7 +63,7 @@ public class MovementController : MonoBehaviour, IPlayer
 
     private void Move()
     {
-        Vector3 direction = new Vector3(_controller.Horizontal, 0f, _controller.Vertical).normalized;
+        Vector3 direction = new Vector3(_inputReader.Horizontal, 0f, _inputReader.Vertical).normalized;
 
         if (direction.magnitude > _minMagnitude)
         {

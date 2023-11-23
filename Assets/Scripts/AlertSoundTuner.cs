@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(AudioSource))]
-public class AlarmSoundController : MonoBehaviour
+public class AlertSoundTuner : MonoBehaviour
 {
-    [SerializeField] private AlarmSystem _alarmSystem;
+    [SerializeField] private IntruderDetector _intruderDetector;
 
     private AudioSource _audioSource;
     private float _minVolume = 0f;
@@ -22,14 +23,14 @@ public class AlarmSoundController : MonoBehaviour
 
     private void OnEnable()
     {
-        _alarmSystem.OnIntruderDetected += ActivateAlarm;
-        _alarmSystem.OnIntruderLeft += DeactivateAlarm;
+        _intruderDetector.OnIntruderDetected += ActivateAlarm;
+        _intruderDetector.OnIntruderLeft += DeactivateAlarm;
     }
 
     private void OnDisable()
     {
-        _alarmSystem.OnIntruderDetected -= ActivateAlarm;
-        _alarmSystem.OnIntruderLeft -= DeactivateAlarm;
+        _intruderDetector.OnIntruderDetected -= ActivateAlarm;
+        _intruderDetector.OnIntruderLeft -= DeactivateAlarm;
     }
 
     private void ActivateAlarm()
